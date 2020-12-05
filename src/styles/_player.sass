@@ -1,11 +1,68 @@
-.player
-    background: pink
-    height: 40vh
-    display: flex
-    flex-direction: column
-    justify-content: space-around
-    align-items: center
-    text-align: center
+input[type="range"]::-thumb
+    background-color: #43f776 !important;
 
-    .time-control
+
+input[type='range']::after
+    background-color: #43f776 !important;
+
+    
+.player
+    // background: pink
+    height: 15vh
+    display: flex
+    align-self: self-end
+    justify-content: space-between
+    margin: 0 1rem
+
+    .song-info
         display: flex
+        align-items: center
+        justify-content: space-between
+        img
+            height: 5rem
+            width: 5rem
+            margin-right: 1.5rem
+        .song-name-album
+            display: flex
+            flex-direction: column
+            padding-right: 1rem
+
+
+    
+    
+    .song-control
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .play-control
+            display: flex
+            justify-content: space-between
+            width: 50%
+            align-items: center
+       
+
+            #play-button
+                font-size: 3rem
+        
+            .left-button
+                font-size: 2rem
+        
+            .right-button
+                font-size: 2rem
+        
+        .time-control
+            display: flex
+           
+
+            input
+                width: 30rem
+                margin-left: 1rem
+                margin-right: 1rem
+    
+    .other-stuff
+        display: flex
+        align-items: center
+        justify-content: space-between
+        width: 17rem

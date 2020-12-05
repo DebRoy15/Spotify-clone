@@ -1,12 +1,14 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Home from "./components/Home";
 import Player from "./components/Player";
-import Song from "./components/Song";
+
 import "./styles/app.sass";
 
 function App() {
   return (
     <div>
-      <Song />
+      <Home />
       <Player />
     </div>
   );
