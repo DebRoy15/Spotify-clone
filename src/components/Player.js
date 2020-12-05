@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import "../styles/_player.sass";
 
-import PlayCircleOutlineRoundedIcon from "@material-ui/icons/PlayCircleOutlineRounded";
 import SkipNextRoundedIcon from "@material-ui/icons/SkipNextRounded";
 import SkipPreviousRoundedIcon from "@material-ui/icons/SkipPreviousRounded";
 import RepeatRoundedIcon from "@material-ui/icons/RepeatRounded";
@@ -12,18 +11,43 @@ import MenuOpenRoundedIcon from "@material-ui/icons/MenuOpenRounded";
 import VolumeDownRoundedIcon from "@material-ui/icons/VolumeDownRounded";
 import AlbumRoundedIcon from "@material-ui/icons/AlbumRounded";
 
-const Player = () => {
+import ChangePlayButton from "./ChangePlayButton";
+
+const Player = ({ currentSongs, isPlaying, setIsPlaying }) => {
+  // State
+  const [songInfo, setSongInfo] = useState({
+    current: 0,
+    duration: 0,
+  });
+  //Ref
+  const audioRef = useRef();
+
+  const getTime = (time) => {
+    return (
+      Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
+    );
+  };
+
+  //Event handlers
+  const timeUpdateHandler = (e) => {
+    const current = e.target.currentTime;
+    const duration = e.target.duration;
+    setSongInfo({ ...songInfo, current, duration });
+  };
+
+  const dragHandler = (e) => {
+    audioRef.current.currentTime = e.target.value;
+    setSongInfo({ ...songInfo, current: e.target.value });
+  };
+
   return (
     <div className="player">
       {/* song info */}
       <div className="song-info">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/en/4/49/Why_Don%27t_We_-_Fallin%27.jpg"
-          alt="song cover"
-        />
+        <img src={currentSongs.cover} alt="song cover" />
         <div className="song-name-album">
-          <span>Fallin' (Adrenaline)</span>
-          <span>Why Don't We</span>
+          <h6>{currentSongs.name}</h6>
+          <span>{currentSongs.artist}</span>
         </div>
         <FavoriteRoundedIcon />
       </div>
@@ -33,16 +57,32 @@ const Player = () => {
           <ThreeSixtyRoundedIcon className="left-button" />
           <SkipPreviousRoundedIcon className="left-button" />
 
-          <PlayCircleOutlineRoundedIcon id="play-button" />
+          <ChangePlayButton
+            audioRef={audioRef}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+          />
 
           <SkipNextRoundedIcon className="right-button" />
           <RepeatRoundedIcon className="right-button" />
         </div>
         <div className="time-control">
-          <p>Start Time</p>
-          <input type="range" max="20" min="0" />
-          <p>EndTime</p>
+          <p>{getTime(songInfo.current)}</p>
+          <input
+            type="range"
+            min={0}
+            max={songInfo.duration}
+            value={songInfo.current}
+            onChange={dragHandler}
+          />
+          <p>{getTime(songInfo.duration)}</p>
         </div>
+        <audio
+          onLoadedMetadata={timeUpdateHandler}
+          onTimeUpdate={timeUpdateHandler}
+          ref={audioRef}
+          src={currentSongs.audio}
+        ></audio>
       </div>
       {/* other stuff */}
       <div className="other-stuff">
