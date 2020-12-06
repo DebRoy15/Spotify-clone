@@ -4,7 +4,7 @@ import "../styles/_home.sass";
 import HomeMenu from "./HomeMenu";
 import HomeSongs from "./HomeSongs";
 
-const Home = ({ songs }) => {
+const Home = ({ songs, setCurrentSongs, audioRef, isPlaying, setSongs }) => {
   return (
     <div className="container-fluid">
       <Row id="home">
@@ -12,7 +12,13 @@ const Home = ({ songs }) => {
           <HomeMenu />
         </Col>
         <Col md={10} className="main-part">
-          <HomeSongs songs={songs} />
+          <HomeSongs
+            songs={songs}
+            setCurrentSongs={setCurrentSongs}
+            audioRef={audioRef}
+            isPlaying={isPlaying}
+            setSongs={setSongs}
+          />
         </Col>
       </Row>
     </div>

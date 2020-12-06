@@ -1,17 +1,16 @@
 import React from "react";
 import ArrowBackIosRoundedIcon from "@material-ui/icons/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
-import {
-  Button,
-  Card,
-  CardDeck,
-  Nav,
-  Navbar,
-  NavDropdown,
-} from "react-bootstrap";
+import { Button, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import Library from "./Library";
 
-const HomeSongs = ({ songs }) => {
+const HomeSongs = ({
+  songs,
+  setCurrentSongs,
+  audioRef,
+  isPlaying,
+  setSongs,
+}) => {
   return (
     <div className="">
       <Navbar sticky="top" className="navbar " collapseOnSelect>
@@ -43,8 +42,14 @@ const HomeSongs = ({ songs }) => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <div className="songs-main-section">
-        <Library songs={songs} />
+      <div className="songs-main-section pt-3">
+        <Library
+          songs={songs}
+          setCurrentSongs={setCurrentSongs}
+          audioRef={audioRef}
+          isPlaying={isPlaying}
+          setSongs={setSongs}
+        />
       </div>
     </div>
   );
